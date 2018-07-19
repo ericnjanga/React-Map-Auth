@@ -1,11 +1,61 @@
 import React, { Component } from 'react';
 import Map from './components/Map.js';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      geolocMsg: 'Loading Map',
+    };
+  }
+  
+  componentDidMount() {
+
+    const success = (pos) => {
+      var crd = pos.coords;
+
+      this.setState({
+        center: {
+          lat: crd.latitude,
+          lng: crd.longitude
+        }
+      });
+      // console.log('Your current position is:');
+      // console.log(`Latitude : ${crd.latitude}`);
+      // console.log(`Longitude: ${crd.longitude}`);
+      // console.log(`More or less ${crd.accuracy} meters.`);
+    };
+
+    const failure = (err) => {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+
+      this.setState({
+        geolocMsg: `ERROR(${err.code}): ${err.message}`
+      });
+
+    };
+
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    navigator.geolocation.getCurrentPosition(success, failure, options);
+
+  }
+
+
+
+
+
+
   render() {
 
+    /*
     const style = {
       panelLogin: {
         position: 'fixed',
@@ -37,24 +87,27 @@ class App extends Component {
         zIndex: '10',
       },
     };
+    */
 
     return (
       <div className="App">
-        <header className="App-header">
+        {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
-        </header>
+        </header> */}
 
-        <div style={style.panelLogin}>
+        {/* <div style={style.panelLogin}>
           <button style={style.panelLogin.button}>Login with Gmail</button>
-        </div>
+        </div> */}
 
-        <div style={style.overlay} />
+        {/* <div style={style.overlay} /> */}
 
-        <Map />
-        {/* <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p> */}
+        {
+          !this.state.center ?
+          <div style={{ padding: '100px 30px' }}>{ this.state.geolocMsg }</div> :
+          <Map {...this.state} />
+        }
+        
       </div>
     );
   }
