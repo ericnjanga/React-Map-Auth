@@ -1,5 +1,5 @@
 # Fanci Map (React App)
-Login panel overlaying a Google Map.
+Google map overlayed by a login panel.
 
 ## ...
 ...
