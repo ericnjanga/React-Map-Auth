@@ -24,6 +24,13 @@
 //   }, 
 // ];
 
+
+export const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
 export const googleMapAPIkey = 'AIzaSyACIFpmGqxK8mmy65nY9eKrufxdpea3muo';
 
 // export default devGeoLocations;
